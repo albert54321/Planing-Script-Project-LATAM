@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoLA_PlanningScript_V1", "ProyectoLA_PlanningScript_V1.csproj", "{FE41CAE6-DD09-4BED-A74B-E1870AD63201}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE41CAE6-DD09-4BED-A74B-E1870AD63201}.Debug|x64.ActiveCfg = Debug|x64
+		{FE41CAE6-DD09-4BED-A74B-E1870AD63201}.Debug|x64.Build.0 = Debug|x64
+		{FE41CAE6-DD09-4BED-A74B-E1870AD63201}.Release|x64.ActiveCfg = Release|x64
+		{FE41CAE6-DD09-4BED-A74B-E1870AD63201}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7AD68D79-C8F2-43B9-AD46-77EBAF6E3516}
+	EndGlobalSection
+EndGlobal
