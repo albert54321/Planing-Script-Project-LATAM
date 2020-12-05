@@ -1,11 +1,11 @@
-﻿ProyectoLA_PlanningScript_V1.esapi
+﻿PlanningScript_V1.esap2
 
 
 library
 C#
 .cs
 E:\Scripts\Projects\ProyectoLA_PlanningScript_V1\obj\x64\Debug\
-ProyectoLA_PlanningScript_V1
+PlanningScript_V2
 none
 false
 DEBUG;TRACE
@@ -16,5 +16,5 @@ DEBUG;TRACE
 15-1394831442
 ConfigStructures.xaml;Configuration.xaml;Credits.xaml;MainView.xaml;
 
-False
+True
 

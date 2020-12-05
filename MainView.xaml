@@ -43,9 +43,10 @@
         <Label FontSize="16" Foreground="White" Grid.Row="6">Tomografía Actual:</Label>
         <TextBox Name="CT" IsReadOnly="True" Grid.Row="6" Grid.Column="1" FontSize="16" Grid.ColumnSpan="2" Margin="0,0,0,5" />
 
-        <Button Name="Apply" IsEnabled="False" FontSize="16" Grid.Row="8" Height="35" Width="100" HorizontalAlignment="Center" Content="Ejecutar" Click="Apply_Click" Margin="33,3.6,49.4,6.2" />
-        <Button Name="Close" FontSize="16" Grid.Row="8" Grid.Column="2" Height="35" Width="100" HorizontalAlignment="Right" Content="Cerrar" Click="Close_Click" Margin="0,4.6,24.8,4.4" />
-        <Button Name="Credits" FontSize="16" Grid.Row="9" Grid.ColumnSpan="3" Height="50" Width="100" HorizontalAlignment="Center" Content="Créditos" Click="Credits_Click" Margin="155,21.8,137.8,9.8" Grid.RowSpan="2" />
+        <Button Name="Apply" IsEnabled="False" FontSize="16" Grid.Row="8" Height="50" Width="100" HorizontalAlignment="Center" Content="Ejecutar" Click="Apply_Click"  />
+        <Button Name="Close" FontSize="16" Grid.Row="8" Grid.Column="2" Height="50" Width="100" HorizontalAlignment="Center" Content="Cerrar" Click="Close_Click" />
+        <Button Name="Credits" FontSize="16" Grid.Row="9" Grid.ColumnSpan="2" Height="40" Width="100" HorizontalAlignment="Center" Content="Créditos" Click="Credits_Click"  Grid.RowSpan="2" />
+        <Button Name="BtConfiguration" FontSize="16" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="1" Height="40" Width="120" HorizontalAlignment="Center" Content="Configuración"  Grid.RowSpan="2" Click="BtConfiguration_Click" />
         <Label Foreground="White"  HorizontalAlignment="Center" Grid.ColumnSpan="3" FontSize="20" Grid.Row="11">
             <Bold>
                 PROYECTO ESTANDARIZACIÓN LATINOAMÉRICA
@@ -53,9 +54,9 @@
         </Label>
 
         <Label Foreground="White" Grid.Column="4" FontSize="16">Elija el Template de Planificación</Label>
-        <ComboBox x:Name="CB1" ItemsSource="{Binding TemplatesName , Mode=TwoWay}"  Text="************************" SelectionChanged="CB1_SelectionChanged" Grid.Row="2"  Grid.Column="4" Margin="2,2,50,2"></ComboBox>
+        <ComboBox x:Name="CbTemplate" MouseEnter="CbTemplate_MouseEnter" Text="************************" SelectionChanged="CB1_SelectionChanged" Grid.Row="2"  Grid.Column="4" Margin="2,2,50,2"></ComboBox>
         <Label Foreground="White" Grid.Column="4" Grid.Row="7" VerticalAlignment="Bottom" FontSize="17" >Seleccionado:</Label>
-        <TextBox Text="{Binding Path=SelectedItem , ElementName=CB1, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Name="Selected" IsReadOnly="True" Grid.Row="8" Grid.Column="4"  FontSize="14" Margin="10,10,50,10"/>
+        <TextBox Text="{Binding Path=SelectedItem , ElementName=CbTemplate, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Name="Selected" IsReadOnly="True" Grid.Row="8" Grid.Column="4"  FontSize="14" Margin="10,10,50,10"/>
         <Label Foreground="White" Grid.Column="4" Grid.Row="10" FontSize="16" HorizontalAlignment="Center">Creado por MSc. Alberto Alarcón @2020</Label>
     </Grid>
 </UserControl>
