@@ -26,8 +26,8 @@ namespace ProyectoLA_PlanningScript_V1
         public PlanningExecution PlanExecute;
         public StructureSet my_ss;
         public ScriptContext context;
-        readonly BaseDeDatos<Configuracion> BDConfig = new BaseDeDatos<Configuracion>(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\DBConfiguration.jason");
-        readonly BaseDeDatosStructures<BoolStringClass> BDStructures = new BaseDeDatosStructures<BoolStringClass>(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\DBStructures.jason");
+        readonly BaseDeDatos<Configuracion> BDConfig = new BaseDeDatos<Configuracion>(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Data\\DBConfiguration.jason");
+        readonly BaseDeDatosStructures<BoolStringClass> BDStructures = new BaseDeDatosStructures<BoolStringClass>(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Data\\DBStructures.jason");
 
         public MainView(ScriptContext Context)
         {
@@ -59,7 +59,6 @@ namespace ProyectoLA_PlanningScript_V1
                     MessageBox.Show("No ha seleccionado un template de planificación, por favor, elija uno y ejecute el programa de nuevo", "ProyectoLA", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-            MessageBox.Show(CbTemplate.Text);
             if (!BDConfig.valores.Any(x => x.Template.ToString() == CbTemplate.Text.ToString()))
             {
                 MessageBox.Show("No existe un Template de planificación que coincida con lo seleccionado, por favor, ingrese a configuración cree uno y ejecute el programa de nuevo", "ProyectoLA", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -72,8 +71,6 @@ namespace ProyectoLA_PlanningScript_V1
             }
             Configuracion valoresConfig = BDConfig.Buscar(x => x.Template.ToString() == CbTemplate.Text.ToString())[0];//aqui enlazo lo que elijen del template con la base de datos
             ObservableCollection<BoolStringClass> valoresStructures = BDStructures.Buscar(x=>x.First().Template.ToString()== CbTemplate.Text.ToString())[0];
-            MessageBox.Show(valoresConfig.Template);
-            MessageBox.Show(valoresStructures.First().Template);
             PlanExecute = new PlanningExecution(context, valoresConfig, valoresStructures);
             MessageBox.Show("Proceso Terminado. Verifique la correcta ejecución de la tarea.", "ProyectoLA", MessageBoxButton.OK, MessageBoxImage.Information);
         }

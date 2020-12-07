@@ -23,7 +23,7 @@ namespace ProyectoLA_PlanningScript_V1
     public partial class ConfigStructures : Window
     {
         public ObservableCollection<BoolStringClass> TheList { get; set; }
-        readonly BaseDeDatosStructures<BoolStringClass> bd = new BaseDeDatosStructures<BoolStringClass>(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\DBStructures.jason");
+        readonly BaseDeDatosStructures<BoolStringClass> bd = new BaseDeDatosStructures<BoolStringClass>(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Data\\DBStructures.jason");
         string operacion = "";
         StructureSet ss;
         public ConfigStructures(StructureSet sset,string txtTemplate)

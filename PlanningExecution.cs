@@ -122,31 +122,30 @@ namespace ProyectoLA_PlanningScript_V1
         {
             Dictionary<string, DoseValue> DVH_dose = new Dictionary<string, DoseValue>();
             Dictionary<string, string> DVH_struct = new Dictionary<string, string>();
-            foreach (var item in valoresSts.Where(x=>x.TheText.Contains("PTV") && x.IsSelected==true) )
+            foreach (var item in valoresSts.Where(x => x.Dose.ToString() != "0" && x.IsSelected == true))
             {
-                DVH_dose.Add(item.TheText.ToString(), new DoseValue(Convert.ToDouble(item.Dose), "Gy"));
-                MessageBox.Show("nombre " + item.TheText + " select" + item.IsSelected);
+                DVH_dose.Add(item.TheText.ToString(), new DoseValue(Convert.ToDouble(item.Dose)*100.0, DoseValue.DoseUnit.cGy));
+                DVH_struct.Add(item.TheText.ToString(), item.TheText.ToString());
             }
-            foreach (var item in valoresSts.Where(x => !x.TheText.Contains("PTV") && x.IsSelected == true && x.VolumenOAR=="-")) 
+            foreach (var item in valoresSts.Where(x => x.Dose.ToString() == "0" && x.IsSelected == true && x.VolumenOAR=="-")) 
             {
                 DVH_struct.Add(item.TheText.ToString(), item.TheText.ToString());
-                MessageBox.Show("nombre " + item.TheText + " select" + item.IsSelected);
             }
-            try
+            if (Convert.ToBoolean(valoresConfig.IsRP))
             {
-                if (Convert.ToBoolean(valoresConfig.IsRP))
+                cureps.CalculateDVHEstimates(valoresConfig.Modelo.ToString(), DVH_dose, DVH_struct);//ID DEL MODELO // DOSIS /MATCH STRUCTURA
+                foreach (var element in valoresSts)
                 {
-                    string[] N_Bowel = { "Bowel", "bowels", "intestinos", "Intestino", "intestino", "Delgado" };
-                    cureps.CalculateDVHEstimates(valoresConfig.Modelo, DVH_dose, DVH_struct);//ID DEL MODELO // DOSIS /MATCH STRUCTURA
-                    foreach (var element in valoresSts)
+                    if (element.VolumenOAR != "-")
                     {
-                        if (element.VolumenOAR != "-")
-                        {
-                            cureps.OptimizationSetup.AddPointObjective(My_ss.Structures.FirstOrDefault(x => x.Id == element.TheText.ToString()), OptimizationObjectiveOperator.Upper, new DoseValue(Convert.ToDouble(element.DoseOAR), "Gy"), Convert.ToDouble(element.VolumenOAR), Convert.ToDouble(element.Prioridad));
-                        }
+                        cureps.OptimizationSetup.AddPointObjective(My_ss.Structures.FirstOrDefault(x => x.Id == element.TheText.ToString()), OptimizationObjectiveOperator.Upper, new DoseValue(Convert.ToDouble(element.DoseOAR)*100.0, DoseValue.DoseUnit.cGy), Convert.ToDouble(element.VolumenOAR), Convert.ToDouble(element.Prioridad));
                     }
-                    //cureps.OptimizationSetup.AddAutomaticNormalTissueObjective(100.0f); //anade normal tissio automatico
-                    if (CalculateDose) Opti_cureps(cureps);//calcula lo elemenal y la dosis
+                }
+                cureps.OptimizationSetup.AddAutomaticNormalTissueObjective(100.0f); //anade normal tissio automatico
+                if (CalculateDose) Opti_cureps(cureps);//calcula lo elemenal y la dosis
+            }
+                try
+                {
                                                            //esto es para queitar obejitvos de una estructura esto porque cada vez que a;ado objetivos no se reemplaza sino se aumenta
                                                            //foreach (OptimizationObjective y in objetives.Where(x => x.StructureId == "Bowel")) cureps.OptimizationSetup.RemoveObjective(y);//quito el objetivo de bowel para que no haya mas
                                                            //IEnumerable<OptimizationObjective> objetives = Enumerable.Empty<OptimizationObjective>();
@@ -167,7 +166,7 @@ namespace ProyectoLA_PlanningScript_V1
                     //    //Opti_cureps(cureps);//calcula lo elemenal y la dosis
                     //    bowelDose = cureps.GetDoseAtVolume(bowel, 0, VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
                     //}
-                }
+                //}
             }
             catch (Exception)
             {
@@ -183,10 +182,9 @@ namespace ProyectoLA_PlanningScript_V1
             }
         }
     
-    public static void Opti_cureps(ExternalPlanSetup cureps)
+    public void Opti_cureps(ExternalPlanSetup cureps)
     {
-        OptimizerResult optresult = cureps.OptimizeVMAT(new OptimizationOptionsVMAT(OptimizationIntermediateDoseOption.UseIntermediateDose, string.Empty));
-        cureps.OptimizeVMAT();
+        cureps.OptimizeVMAT(new OptimizationOptionsVMAT(OptimizationIntermediateDoseOption.UseIntermediateDose, valoresConfig.MLC.ToString()));
         cureps.CalculateDose();
         //cureps.PlanNormalizationValue = 100.2f;//esta normalizacion es la isododis de normalizaczacion no lo que colocamos en %tratamiento
     }
@@ -403,24 +401,94 @@ namespace ProyectoLA_PlanningScript_V1
             MessageBoxResult desicion = MessageBox.Show("Haces configurados, desea continuar a la optimizacion", "Warning", MessageBoxButton.YesNo,MessageBoxImage.Warning);
             return desicion;
         }
+        private void ChangeName(string name, Course cs = null, Structure st = null, StructureSet ss = null, Image img = null, ExternalPlanSetup eps = null)
+        {
+            if (eps != null)
+            {
+                try
+                {
+                    eps.Id = name;
+                }
+                catch (Exception)
+                {
+                    if (name.Length < 16) img.Id = name + ".";
+                    else img.Id = name.Remove(name.Length - 1) + ".";
+                }
+            }
+            if (cs != null)
+            {
+                try
+                {
+                    cs.Id = name;
+                }
+                catch (Exception)
+                {
+                    if (name.Length <= 6) cs.Id = name + DateTime.Now.ToString("MM/dd/yyyy");
+                    else cs.Id = name.Remove(6) + DateTime.Now.ToString("MM/dd/yyyy");
+                }
+            }
+            if (img != null)
+            {
+                try
+                {
+                    img.Id = name;
+                }
+                catch (Exception)
+                {
+                    if (name.Length < 16) img.Id = name + ".";
+                    else img.Id = name.Remove(name.Length - 1) + ".";
+                }
+            }
+            if (ss != null)
+            {
+                try
+                {
+                    ss.Id = name;
+                }
+                catch (Exception)
+                {
+                    if (name.Length < 16) ss.Id = name + ".";
+                    else ss.Id = name.Remove(name.Length - 1) + ".";
+                }
+            }
+            if (st != null)
+            {
+                try
+                {
+                    st.Id = name;
+                }
+                catch (Exception)
+                {
+                    if (name.Length < 16) st.Id = name + ".";
+                    else st.Id = name.Remove(name.Length - 1) + ".";
+                }
+            }
+        }
+
         public ExternalPlanSetup SettingPlan(ScriptContext context)
         {
-
             Patient patient = context.Patient;
             StructureSet sset = context.StructureSet;
             patient.BeginModifications();   // enable writing with this script.
             IEnumerable<Course> sss = patient.Courses;//lista de cursos
             Course curcourse = patient.AddCourse(); ;//creo la  clase course porque no se puede crear dentro de condicional
-            //ChangeName(valores.Curso, cs: curcourse);
+            ChangeName(valoresConfig.Curso, cs: curcourse);
             ExternalPlanSetup cureps = curcourse.AddExternalPlanSetup(sset);
-            //ChangeName(valores.Plan, eps: cureps);
+            ChangeName(valoresConfig.Plan, eps: cureps);
             //set calculation model use default??? nose
             cureps.SetCalculationModel(CalculationType.PhotonVMATOptimization, valoresConfig.PVO);
             cureps.SetCalculationModel(CalculationType.DVHEstimation, valoresConfig.DVH);
             cureps.SetCalculationModel(CalculationType.PhotonVolumeDose, valoresConfig.PVD);//CalculationGridSizeInCM 
             cureps.SetCalculationOption(valoresConfig.PVD, "CalculationGridSizeInCM", valoresConfig.Grilla);
             cureps.SetCalculationOption(valoresConfig.PVD, "HeterogeneityCorrection", Convert.ToBoolean(valoresConfig.CorreccionH)? "ON":"OFF");
-            cureps.SetPrescription(valoresConfig.NumeroFracciones, new DoseValue(valoresConfig.Dosis / Convert.ToDouble(valoresConfig.NumeroFracciones), "Gy"), 1.0);//prescription 0.99=99 %tratamiento sip
+            try
+            {
+                cureps.SetPrescription(valoresConfig.NumeroFracciones, new DoseValue(valoresConfig.Dosis *100.0 / Convert.ToDouble(valoresConfig.NumeroFracciones), "cGy"), 1.0);//prescription 0.99=99 %tratamiento sip
+            }
+            catch (Exception)
+            {
+                cureps.SetPrescription(valoresConfig.NumeroFracciones, new DoseValue(valoresConfig.Dosis / Convert.ToDouble(valoresConfig.NumeroFracciones), "Gy"), 1.0);//prescription 0.99=99 %tratamiento sip
+            }
 
             //esto da en mm
             Structure ptv_total = sset.Structures.FirstOrDefault(x=>x.Id== valoresConfig.Estructura);
@@ -432,40 +500,40 @@ namespace ProyectoLA_PlanningScript_V1
                 if (i == 1)
 
                 {
-                    Beam VMAT1 = BeamWithMaxPostionJaws(ebmp,  true, isocenter, cureps, ptv_total);
+                    Beam VMAT1 = BeamWithMaxPostionJaws(ebmp,  true, isocenter, cureps, ptv_total,true);
                     VMAT1.Id = "Field" + "_CW_" + i.ToString();
                 }
                 else if (i == 2)
                 {
-                    Beam VMAT2 = BeamWithMaxPostionJaws(ebmp,  false, isocenter, cureps, ptv_total);
+                    Beam VMAT2 = BeamWithMaxPostionJaws(ebmp,  false, isocenter, cureps, ptv_total,false);
                     VMAT2.Id = "Field" + "_CCW_" + i.ToString();
                 }
                 else if (i == 3)
                 {
-                    Beam VMAT3 = BeamWithMaxPostionJaws(ebmp,  true, isocenter, cureps, ptv_total);
+                    Beam VMAT3 = BeamWithMaxPostionJaws(ebmp,  true, isocenter, cureps, ptv_total,false);
                     VMAT3.Id = "Field" + "_CW_" + i.ToString();
                 }
                 else if (i == 4)
                 {
-                    Beam VMAT4 = BeamWithMaxPostionJaws(ebmp,  true, isocenter, cureps, ptv_total);
+                    Beam VMAT4 = BeamWithMaxPostionJaws(ebmp,  true, isocenter, cureps, ptv_total,true);
                     VMAT4.Id = "Field" + "_CCW_" + i.ToString();
                 }
                 else if (i == 5)
                 {
-                    Beam VMAT4 = BeamWithMaxPostionJaws(ebmp,  true, isocenter, cureps, ptv_total);
+                    Beam VMAT4 = BeamWithMaxPostionJaws(ebmp,  true, isocenter, cureps, ptv_total,true);
                     VMAT4.Id = "Field" + "_CW_" + i.ToString();
                 }
             }
             return cureps;
         }
-        private double RedondeoArriba(double valor, double paso = 0.5)//redondea a 0.5
+        private double RedondeoArriba(double valor, double paso = 0.5)//redondea a 0.5  lo que pasa es que el isocentro es el coord donde el origen no es 000, sino en el origen dicom
         {
             return Math.Ceiling(valor / paso) * paso * 10;
         }
-        private Beam BeamWithMaxPostionJaws(ExternalBeamMachineParameters ebmp, bool gantryIsClockwise, VVector isocenter, ExternalPlanSetup eps, Structure st)
+        private Beam BeamWithMaxPostionJaws(ExternalBeamMachineParameters ebmp, bool gantryIsClockwise, VVector isocenter, ExternalPlanSetup eps, Structure st, bool colang)
         {
             VRect<double> jawsVector = new VRect<double>(-10, -10, 10, 10);
-            double[] setting_local = { valoresConfig.Colimador, valoresConfig.Inicio, valoresConfig.Fin };//LOCAL PARA CAMBIAR ANGULOS
+            double[] setting_local = { Math.Abs(360 * Convert.ToDouble(!colang) - valoresConfig.Colimador), valoresConfig.Inicio, valoresConfig.Fin };//LOCAL PARA CAMBIAR ANGULOS
             setting_local[2] = valoresConfig.Inicio;
             //////////////////////////////////////////ESTOS 4 BEAMS ES PARA ENCONTRAR LA MAXIMA APERTURA DE OS JAWS
             Beam beam1 = CreateArcBeamAngle(ebmp, jawsVector, setting_local, gantryIsClockwise, isocenter, eps, st);
@@ -490,7 +558,7 @@ namespace ProyectoLA_PlanningScript_V1
             }
             //beam con la maxima apertura
             setting_local[1] = valoresConfig.Inicio; setting_local[2] = valoresConfig.Fin;
-            Beam VMAT = CreateArcBeamAngle(ebmp, Find4Max(beam1, beam2, beam3, beam4), setting_local, gantryIsClockwise, isocenter, eps, st);
+            Beam VMAT = CreateArcBeamAngle(ebmp, Find4Max(beam1, beam2, beam3, beam4), setting_local, gantryIsClockwise, isocenter, eps, st,colang);
             if (valoresConfig.MLC.Contains("HD")|| valoresConfig.MLC.Contains("hd")) Jaws_corrected(VMAT);//CORRIJE LOS JAWS Y
             eps.RemoveBeam(beam1);
             eps.RemoveBeam(beam2);
@@ -506,7 +574,7 @@ namespace ProyectoLA_PlanningScript_V1
             double[] jawsY2Max = { Math.Abs(beam1.ControlPoints.First().JawPositions.Y2), Math.Abs(beam2.ControlPoints.First().JawPositions.Y2), Math.Abs(beam3.ControlPoints.First().JawPositions.Y2), Math.Abs(beam4.ControlPoints.First().JawPositions.X1) };
             return new VRect<double>(-jawsX1Max.Max(), -jawsY1Max.Max(), jawsX2Max.Max(), jawsY2Max.Max());
         }
-        private Beam CreateArcBeamAngle(ExternalBeamMachineParameters ebmp, VRect<double> jawsVector, double[] setting_arc, bool gantryIsClockwise, VVector isocenter, ExternalPlanSetup eps, Structure st)
+        private Beam CreateArcBeamAngle(ExternalBeamMachineParameters ebmp, VRect<double> jawsVector, double[] setting_arc, bool gantryIsClockwise, VVector isocenter, ExternalPlanSetup eps, Structure st, bool colang=true)
         {
             Beam beam = null;
             double shift = 0;
@@ -518,7 +586,7 @@ namespace ProyectoLA_PlanningScript_V1
             }
             else
             {//shift es porq si doy angle to start and stop iguales me da error
-                beam = eps.AddArcBeam(ebmp, jawsVector, setting_arc[0], setting_arc[2], setting_arc[1] + shift, GantryDirection.CounterClockwise, 0, isocenter);//179
+                beam = eps.AddArcBeam(ebmp, jawsVector,setting_arc[0], setting_arc[2], setting_arc[1] + shift, GantryDirection.CounterClockwise, 0, isocenter);//179
             }
             if (shift != 0) beam.FitCollimatorToStructure(new FitToStructureMargins(8), st, true, true, false);//ver si 8 no genera problemas
             return beam;

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProyectoLA_PlanningScript_V1"
         mc:Ignorable="d"
-        Title="Configuración de estructures" Height="650" Width="550">
+        Title="Configuración de estructures" Height="650" Width="650">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FF0A4686" Offset="1"/>
@@ -32,7 +32,7 @@
         <Label Foreground="White" FontSize="15" Content="Nombre del Template:" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
         <TextBox Name="TbBuscarAct" VerticalContentAlignment="Center" MouseEnter="TbBuscarAct_MouseEnter" MouseLeave="TbBuscarAct_MouseLeave" Background="White" Margin="25,3,3,3" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">Insertar, Actualizar o Eliminar...</TextBox>
 
-        <ListBox Name="LbEstructuras"  Grid.Row="2" Background="AliceBlue" Grid.Column="0" Grid.ColumnSpan="4" Margin="5" ItemsSource="{Binding TheList}" >
+        <ListBox Name="LbEstructuras"  Grid.Row="2" Background="AliceBlue" Grid.Column="0" Grid.ColumnSpan="5" Margin="5" ItemsSource="{Binding TheList}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -40,27 +40,28 @@
                             <ColumnDefinition Width="105"/>
                             <ColumnDefinition Width="130"/>
                             <ColumnDefinition Width="20"/>
-                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="20"/>
                             <ColumnDefinition Width="90"/>
-                            <ColumnDefinition Width="50"/>
                             <ColumnDefinition Width="90"/>
-                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="90"/>
-                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="90"/>
-                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Template:" Grid.Column="0" FontSize="11" />
-                        <TextBox Name="TbTemplate" IsReadOnly="True" Height="17" Grid.Column="1" Grid.ColumnSpan="2" FontSize="12"  Background="White" Text="{Binding Template, Mode=TwoWay}"/>
-                        <CheckBox Name="CbNames"  VerticalAlignment="Center" FontSize="12" Grid.Column="3" IsChecked="{Binding IsSelected}" Content="{Binding TheText}" />
+                        <TextBox Name="TbTemplate" Margin="2" IsReadOnly="True" Height="17" Grid.Column="1" Grid.ColumnSpan="2" FontSize="12"  Background="White" Text="{Binding Template, Mode=TwoWay}"/>
+                        <CheckBox Name="CbNames" Margin="2"  VerticalAlignment="Center" FontSize="12" Grid.Column="3" IsChecked="{Binding IsSelected}" Content="{Binding TheText}" />
                         <Label Content="Dosis PTV Gy:" Grid.Column="4" FontSize="11" />
-                        <TextBox Name="TbDosis" Height="17" Grid.Column="5" Grid.ColumnSpan="2" FontSize="12"  Background="White" Text="{Binding Dose, Mode=TwoWay}"/>
+                        <TextBox Name="TbDosis" Margin="2" Height="17" Grid.Column="5"  FontSize="12"  Background="White" Text="{Binding Dose, Mode=TwoWay}"/>
                         <Label Content="Dosis OAR Gy:" Grid.Column="6" FontSize="11" />
-                        <TextBox Name="TbDosisOAR" Height="17" Grid.Column="7" Grid.ColumnSpan="2" FontSize="12"  Background="White" Text="{Binding DoseOAR, Mode=TwoWay}"/>
+                        <TextBox Name="TbDosisOAR" Margin="2" Height="17" Grid.Column="7"  FontSize="12"  Background="White" Text="{Binding DoseOAR, Mode=TwoWay}"/>
                         <Label Content="Volumen OAR %:" Grid.Column="8" FontSize="11" />
-                        <TextBox Name="TbVolumenOAR" Height="17" Grid.Column="9" Grid.ColumnSpan="2" FontSize="12"  Background="White" Text="{Binding VolumenOAR, Mode=TwoWay}"/>
+                        <TextBox Name="TbVolumenOAR" Margin="2" Height="17" Grid.Column="9"  FontSize="12"  Background="White" Text="{Binding VolumenOAR, Mode=TwoWay}"/>
                         <Label Content="PRIORIDAD:" Grid.Column="10" FontSize="11" />
-                        <TextBox Name="TbPrioridad" Height="17" Grid.Column="11" Grid.ColumnSpan="2" FontSize="12"  Background="White" Text="{Binding Prioridad, Mode=TwoWay}"/>
+                        <TextBox Name="TbPrioridad" Margin="2" Height="17" Grid.Column="11"  FontSize="12"  Background="White" Text="{Binding Prioridad, Mode=TwoWay}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

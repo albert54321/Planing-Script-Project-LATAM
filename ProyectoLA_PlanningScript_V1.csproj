@@ -95,5 +95,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LOGO2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LOGO.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5,9 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProyectoLA_PlanningScript_V1"
         mc:Ignorable="d"
-        Title="Créditos" FontSize="24" Width="550" Height="350">
+        Title="Créditos" FontSize="24" Width="550" Height="300">
     <Grid>
-        <StackPanel Orientation="Horizontal" RenderTransformOrigin="0.5,0.5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.8*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.6*"/>
+
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Vertical" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <StackPanel.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -15,13 +25,17 @@
                     <GradientStop Color="#FFD2D2D2" Offset="1"/>
                 </LinearGradientBrush>
             </StackPanel.Background>
-            <Label x:Name="Stat_Copy0" Content="Autor:   Mgter. Alberto Alarcón Paredes" HorizontalAlignment="Center" Margin="20,30,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFFEFEFF" Width="412" Height="34" FontSize="18"/>
-            <Label x:Name="Stat_Copy1" Content="Magister en Física Médica-Instituto Balseiro" HorizontalAlignment="Left" Margin="-410,80,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFFEFEFF" Height="34" FontSize="18"/>
-            <Label x:Name="Stat_Copy2" Content="Licenciado en Física Universidad Mayor de San Simón" HorizontalAlignment="Left" Margin="-410,120,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFFEFEFF" Width="449" Height="34" FontSize="18"/>
-            <Label x:Name="Stat_Copy3" Content="Proyecto: Estandarización en Radioterapia LatinoAmérica" FontWeight="Bold" HorizontalAlignment="Left" Margin="-450,160,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFFEFEFF"  Height="34" FontSize="18"/>
-            <Label x:Name="Stat_Copy4" Content="Email: alarcon.alberto01@gmail.com" HorizontalAlignment="Left" Margin="-493,200,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFFEFEFF" Width="380" Height="34" FontSize="18"/>
-            <Label x:Name="Stat_Copy5" Content="LatinoAmérica" HorizontalAlignment="Left" Margin="-360,240,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFFEFEFF" Width="351" Height="34" FontSize="18"/>
-
+            <Label x:Name="Stat_Copy0" Content="Autor:   Mgter. Alberto Alarcón Paredes" HorizontalAlignment="Left"  Margin="30,0,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFFEFEFF" Width="412" Height="34" FontSize="18"/>
+            <Label x:Name="Stat_Copy1" Content="Magister en Física Médica-Instituto Balseiro" HorizontalAlignment="Left" Margin="30,0,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFFEFEFF" Height="34" FontSize="18"/>
+            <Label x:Name="Stat_Copy2" Content="Licenciado en Física Universidad Mayor de San Simón" HorizontalAlignment="Left" Margin="30,0,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFFEFEFF" Width="449" Height="34" FontSize="18"/>
+            <Label x:Name="Stat_Copy3" Content="Proyecto: Estandarización en Radioterapia LatinoAmérica" FontWeight="Bold" HorizontalAlignment="Left" Margin="30,0,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFFEFEFF"  Height="34" FontSize="18"/>
+            <Label x:Name="Stat_Copy4" Content="Email: alarcon.alberto@radiray.com" HorizontalAlignment="Left" Margin="30,0,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFFEFEFF" Width="380" Height="34" FontSize="18"/>
+            <Label x:Name="Stat_Copy5" Content="LatinoAmérica" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="30,0,0,0" Background="{x:Null}" Foreground="#FFFEFEFF" Width="351" Height="34" FontSize="18"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="12">
+            <StackPanel.Background>
+                <ImageBrush ImageSource="Images\LOGO2.PNG"/>
+            </StackPanel.Background>
         </StackPanel>
     </Grid>
 </Window>

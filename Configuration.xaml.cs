@@ -22,7 +22,7 @@ namespace ProyectoLA_PlanningScript_V1
     /// </summary>
     public partial class Configuration : Window
     {
-        readonly BaseDeDatos<Configuracion> bd = new BaseDeDatos<Configuracion>(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)+"\\DBConfiguration.jason");
+        readonly BaseDeDatos<Configuracion> bd = new BaseDeDatos<Configuracion>(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)+"\\Data\\DBConfiguration.jason");
         readonly List<string> MLC = new List<string>();
         readonly List<string> Energia = new List<string>();
         readonly List<string> Tecnica = new List<string>();
@@ -54,7 +54,14 @@ namespace ProyectoLA_PlanningScript_V1
             Tecnica.Add("ARC");
             Tecnica.Add("SRS ARC");
             cbTecnica.ItemsSource = Tecnica;
-            cbestructura.ItemsSource = SetSt.Structures;
+
+            List<string> listaNombres = new List<string>();
+            foreach (var item in SetSt.Structures)
+            {
+                listaNombres.Add(item.Id);
+            }
+            cbestructura.ItemsSource = listaNombres;
+
             try
             {
                 txtPVD.Text = _plan.GetCalculationModel(CalculationType.PhotonVolumeDose).ToString();
@@ -86,7 +93,7 @@ namespace ProyectoLA_PlanningScript_V1
             catch (Exception){}
             try
             {
-                cbestructura.Text = SetSt.Structures.FirstOrDefault(x => x.Id.Contains("PTV_Total")).Id;
+                cbestructura.Text = SetSt.Structures.FirstOrDefault(x => x.Id.Contains("PTV_Total")).Id.ToString();
             }
             catch (Exception){}
             bd.Cargar();
