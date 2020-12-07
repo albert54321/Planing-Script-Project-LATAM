@@ -39,10 +39,8 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="105"/>
                             <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="20"/>
-                            <ColumnDefinition Width="20"/>
-                            <ColumnDefinition Width="90"/>
-                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="90"/>
                             <ColumnDefinition Width="30"/>
@@ -52,16 +50,16 @@
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Template:" Grid.Column="0" FontSize="11" />
-                        <TextBox Name="TbTemplate" Margin="2" IsReadOnly="True" Height="17" Grid.Column="1" Grid.ColumnSpan="2" FontSize="12"  Background="White" Text="{Binding Template, Mode=TwoWay}"/>
-                        <CheckBox Name="CbNames" Margin="2"  VerticalAlignment="Center" FontSize="12" Grid.Column="3" IsChecked="{Binding IsSelected}" Content="{Binding TheText}" />
-                        <Label Content="Dosis PTV Gy:" Grid.Column="4" FontSize="11" />
-                        <TextBox Name="TbDosis" Margin="2" Height="17" Grid.Column="5"  FontSize="12"  Background="White" Text="{Binding Dose, Mode=TwoWay}"/>
-                        <Label Content="Dosis OAR Gy:" Grid.Column="6" FontSize="11" />
-                        <TextBox Name="TbDosisOAR" Margin="2" Height="17" Grid.Column="7"  FontSize="12"  Background="White" Text="{Binding DoseOAR, Mode=TwoWay}"/>
-                        <Label Content="Volumen OAR %:" Grid.Column="8" FontSize="11" />
-                        <TextBox Name="TbVolumenOAR" Margin="2" Height="17" Grid.Column="9"  FontSize="12"  Background="White" Text="{Binding VolumenOAR, Mode=TwoWay}"/>
-                        <Label Content="PRIORIDAD:" Grid.Column="10" FontSize="11" />
-                        <TextBox Name="TbPrioridad" Margin="2" Height="17" Grid.Column="11"  FontSize="12"  Background="White" Text="{Binding Prioridad, Mode=TwoWay}"/>
+                        <TextBox Name="TbTemplate" Margin="2" IsReadOnly="True" Height="17" Grid.Column="1" FontSize="12"  Background="White" Text="{Binding Template, Mode=TwoWay}"/>
+                        <CheckBox Name="CbNames" Margin="2"  VerticalAlignment="Center" FontSize="12" Grid.Column="2" IsChecked="{Binding IsSelected}" Content="{Binding TheText}" />
+                        <Label Content="Dosis PTV Gy:" Grid.Column="3" FontSize="11" />
+                        <TextBox Name="TbDosis" Margin="2" Height="17" Grid.Column="4"  FontSize="12"  Background="White" Text="{Binding Dose, Mode=TwoWay}"/>
+                        <Label Content="Dosis OAR Gy:" Grid.Column="5" FontSize="11" />
+                        <TextBox Name="TbDosisOAR" Margin="2" Height="17" Grid.Column="6"  FontSize="12"  Background="White" Text="{Binding DoseOAR, Mode=TwoWay}"/>
+                        <Label Content="Volumen OAR %:" Grid.Column="7" FontSize="11" />
+                        <TextBox Name="TbVolumenOAR" Margin="2" Height="17" Grid.Column="8"  FontSize="12"  Background="White" Text="{Binding VolumenOAR, Mode=TwoWay}"/>
+                        <Label Content="PRIORIDAD:" Grid.Column="9" FontSize="11" />
+                        <TextBox Name="TbPrioridad" Margin="2" Height="17" Grid.Column="10"  FontSize="12"  Background="White" Text="{Binding Prioridad, Mode=TwoWay}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

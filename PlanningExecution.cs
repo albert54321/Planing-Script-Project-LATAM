@@ -398,7 +398,7 @@ namespace ProyectoLA_PlanningScript_V1
 
         public static MessageBoxResult Question()//pregunta para paraar en mitad antes de la optimizacion
         {
-            MessageBoxResult desicion = MessageBox.Show("Haces configurados, desea continuar a la optimizacion", "Warning", MessageBoxButton.YesNo,MessageBoxImage.Warning);
+            MessageBoxResult desicion = MessageBox.Show("Haces configurados, desea continuar a la optimización", "Warning", MessageBoxButton.YesNo,MessageBoxImage.Warning);
             return desicion;
         }
         private void ChangeName(string name, Course cs = null, Structure st = null, StructureSet ss = null, Image img = null, ExternalPlanSetup eps = null)

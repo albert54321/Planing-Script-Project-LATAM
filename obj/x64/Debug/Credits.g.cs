@@ -100,7 +100,7 @@ namespace ProyectoLA_PlanningScript_V1 {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/PlanningScript_V2.esapi;component/credits.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ProyectoLA_PlanningScript_V2.esapi;component/credits.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\Credits.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
